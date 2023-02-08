@@ -1,3 +1,14 @@
-const { saveAuthor } = require("../../store/account.store");
+const { saveAuthor, getOne: getOneUser } = require("../../store/account.store");
+const createError = require("http-errors");
 
-module.exports = async (data) => await saveAuthor(data);
+const createAccount = async (data) => {
+  const { email, password } = data;
+  const isExist = await getOneUser({ email });
+  console.log(isExist);
+  if (isExist) {
+    throw createError.Conflict(`${email} is ready been register`);
+  }
+  return await saveAuthor({ email, password });
+};
+
+module.exports = { createAccount };

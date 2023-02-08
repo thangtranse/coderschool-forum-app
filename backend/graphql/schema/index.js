@@ -16,10 +16,5 @@ const schema = makeExecutableSchema({
   typeDefs: [constraintDirectiveTypeDefs, typeDefs],
   resolvers: resolvers,
 });
-const plugins = [
-  createApolloQueryValidationPlugin({
-    schema,
-  }),
-];
 
 module.exports = { schema };
