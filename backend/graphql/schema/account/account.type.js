@@ -10,8 +10,8 @@ const typeDefs = gql`
   }
 
   input AccountInput {
-    email: String!
-    password: String!
+    email: String @constraint(minLength: 5, format: "email")
+    password: String
   }
 
   type Query {
