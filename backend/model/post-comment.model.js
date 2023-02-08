@@ -6,9 +6,9 @@ const dbConnected = require("../datasources/connection.mongodb");
 const schema = new Schema(
   {
     text: { type: String, required: true },
-    author: { type: Schema.Types.ObjectId, ref: "accounts", required: true },
-    post: { type: Schema.Types.ObjectId, ref: "posts", required: true },
-    replyTo: { type: Schema.Types.ObjectId, ref: "post_comments" },
+    author: { type: Schema.Types.ObjectId, ref: "account", required: true },
+    post: { type: Schema.Types.ObjectId, ref: "post", required: true },
+    replyTo: { type: Schema.Types.ObjectId, ref: "post_comment" },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
     upvotes: { type: Number, default: 0 },
@@ -28,8 +28,8 @@ schema.pre("save", async function (next) {
   }
 });
 
-dataImportSchema.pre("update", function () {
+schema.pre("update", function () {
   this.update({}, { $set: { updatedAt: new Date() } });
 });
 
-module.exports = dbConnected.model("post_comments", dataImportSchema);
+module.exports = dbConnected.model("post_comment", schema);

@@ -1,17 +1,14 @@
 require("dotenv").config();
 
 const App = require("./app");
-const MongoConnect = require("./datasources/connection.mongodb");
-const RedisConnect = require("./datasources/connection.redis");
+const MongoConnect = require("./datasource/connection.mongodb");
+const RedisConnect = require("./datasource/connection.redis");
 
 MongoConnect.on("connected", function () {
   console.log(`Mongodb is connected with database is:: ${this.name}`);
-  RedisConnect.on("ready", function () {
-    console.log(`Redis is ready`);
-    const PORT = process.env.PORT || 3000;
-    App.listen(PORT, () => {
-      console.log(`Server running on ${PORT}`);
-    });
+  const PORT = process.env.PORT || 3000;
+  App.listen(PORT, () => {
+    console.log(`Server running on:: ${PORT}`);
   });
 });
 

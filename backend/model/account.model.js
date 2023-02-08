@@ -1,18 +1,15 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const dbConnected = require("../datasources/connection.mongodb");
+const dbConnected = require("../datasource/connection.mongodb");
 
 const schema = new Schema(
   {
-    title: { type: String, required: true },
-    text: { type: String },
-    author: { type: Schema.Types.ObjectId, ref: "accounts", required: true },
-    tags: [{ type: String }],
+    email: { type: String, required: true },
+    password: { type: String, required: true },
+    name: { type: String },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
-    upvotes: { type: Number, default: 0 },
-    downvotes: { type: Number, default: 0 },
     properties: {},
   },
   { timestamps: true }
@@ -28,8 +25,8 @@ schema.pre("save", async function (next) {
   }
 });
 
-dataImportSchema.pre("update", function () {
+schema.pre("update", function () {
   this.update({}, { $set: { updatedAt: new Date() } });
 });
 
-module.exports = dbConnected.model("posts", dataImportSchema);
+module.exports = dbConnected.model("account", schema);
