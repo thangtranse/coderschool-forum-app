@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const postModel = require("../model/post.model");
 
 const count = async (filter = {}) => {
@@ -8,9 +9,9 @@ const getOne = async (filter = {}, projection = {}, options = {}) => {
   return await postModel.findOne(filter, projection, options);
 };
 
-const getAll = async ({ filter = {}, limit = 0, page = 1 }) => {
+const getAll = async ({ filter = {}, limit = 10, page = 1 }) => {
   let setPage = page < 1 ? 1 : page;
-  const skip = limit * setPage;
+  const skip = limit * (setPage - 1);
   return await postModel.find(filter, { __v: false }).limit(limit).skip(skip);
 };
 
@@ -23,8 +24,20 @@ const createPost = async (data) => {
   return await post.save();
 };
 
+const updateUserPost = async (postId, userId, dataUpdate) => {
+  return await postModel.findOneAndUpdate(
+    {
+      _id: new mongoose.Types.ObjectId(postId),
+      author: new mongoose.Types.ObjectId(userId),
+    },
+    { $set: dataUpdate },
+    { new: true }
+  );
+};
+
 module.exports = {
   createPost,
+  updateUserPost,
   count,
   getAll,
   getById,

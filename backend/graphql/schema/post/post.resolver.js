@@ -1,4 +1,5 @@
 const postService = require("../../../service/post");
+const accountService = require("../../../service/account");
 
 const resolvers = {
   Query: {
@@ -21,17 +22,25 @@ const resolvers = {
       return await postService.getPostByID(parseArgs._id);
     },
   },
+  Post: {
+    author: async (parent, args) => {
+      const { author } = parent;
+      return await accountService.getAccountByID(author);
+    },
+  },
   Mutation: {
-    createPost: async (parent, args) => {
+    createPost: async (parent, args, context) => {
+      const userId = context.user.userId;
       const parseArgs = JSON.parse(JSON.stringify(args));
-      return {};
+      const result = await postService.createNewPost(parseArgs.input, userId);
+      return await postService.createNewPost(parseArgs.input, userId);
     },
-    updatePost: async (parent, args) => {
+    updatePost: async (parent, args, context) => {
+      const userId = context.user.userId;
       const parseArgs = JSON.parse(JSON.stringify(args));
-      return {};
+      return await postService.updateUserPostService(parseArgs.input, parseArgs._id, userId);
     },
-    deletePost: async (parent, args) => {
-      const parseArgs = JSON.parse(JSON.stringify(args));
+    deletePost: async (parent, args, context) => {
       return {};
     },
   },

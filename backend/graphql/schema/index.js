@@ -17,14 +17,22 @@ const permissions = shield({
   Query: {
     // "*": deny,
     // "*": allow,
+
+    // Account
     account: isAuthenticated,
     accounts: isAuthenticated,
     profile: isAuthenticated,
+
+    // POST
   },
   Mutation: {
     // "*": deny,
     updateAccount: isAuthenticated,
     deleteAccount: isAuthenticated,
+    // POST
+    createPost: isAuthenticated,
+    updatePost: isAuthenticated,
+    deletePost: isAuthenticated,
   },
 });
 

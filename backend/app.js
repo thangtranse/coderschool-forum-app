@@ -36,6 +36,7 @@ const server = new ApolloServer({
 
     JWT.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, payload) => {
       if (err) {
+        console.log(err)
         user = null;
       } else {
         user = payload;

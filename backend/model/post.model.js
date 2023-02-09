@@ -6,7 +6,7 @@ const dbConnected = require("../datasource/connection.mongodb");
 const schema = new Schema(
   {
     title: { type: String, required: true },
-    text: { type: String },
+    content: { type: String },
     author: { type: Schema.Types.ObjectId, ref: "account", required: true },
     tags: [{ type: String }],
     createdAt: { type: Date, default: Date.now },
