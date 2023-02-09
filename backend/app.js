@@ -6,6 +6,7 @@ const {
   createApolloQueryValidationPlugin,
 } = require("graphql-constraint-directive");
 const bodyParser = require("body-parser");
+const JWT = require("jsonwebtoken");
 
 const app = express();
 app.use(bodyParser.urlencoded({ limit: "5mb", extended: true }));
@@ -15,20 +16,42 @@ app.use(
     extended: true,
   })
 );
-const { schema } = require("./graphql/schema");
+const { schemaWithPermissions } = require("./graphql/schema");
 const plugins = [
   createApolloQueryValidationPlugin({
-    schema,
+    schema: schemaWithPermissions,
   }),
 ];
+
 const server = new ApolloServer({
-  schema: schema,
+  schema: schemaWithPermissions,
   plugins: plugins,
+  context: ({ req }) => {
+    let user = null;
+    const authHeader = req.headers["authorization"];
+    if (!authHeader) return user;
+
+    const bearerToken = authHeader.split(" ");
+    const token = bearerToken[1];
+
+    JWT.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, payload) => {
+      if (err) {
+        user = null;
+      } else {
+        user = payload;
+      }
+    });
+
+    return { user };
+  },
 });
 
 async function start() {
   await server.start();
-  server.applyMiddleware({ app, bodyParserConfig: { limit: "5mb" } });
+  server.applyMiddleware({
+    app,
+    bodyParserConfig: { limit: "5mb" },
+  });
   console.log(`${server.graphqlPath}`);
 }
 

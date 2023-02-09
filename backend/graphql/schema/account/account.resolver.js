@@ -5,6 +5,9 @@ const resolvers = {
     accounts: async () => await accountService.getAllAccount(),
     account: async (parent, args) =>
       await accountService.getAccountByID(args._id),
+    profile: async (parent, args, context) => {
+      return await accountService.getAccountByID(context.user.userId);
+    },
   },
   Mutation: {
     createAccount: async (parent, args) => {

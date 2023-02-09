@@ -15,7 +15,8 @@ const typeDefs = gql`
   }
 
   input AuthorInput {
-    refresh_token: String
+    access_token: String!
+    refresh_token: String!
   }
 
   type AuthorPayload {
@@ -27,6 +28,7 @@ const typeDefs = gql`
   type Query {
     accounts: [Account]!
     account(_id: ID!): Account
+    profile: Account
   }
 
   type Mutation {
