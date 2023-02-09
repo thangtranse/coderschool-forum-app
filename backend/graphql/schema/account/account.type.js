@@ -36,6 +36,7 @@ const typeDefs = gql`
     logout(input: AuthorInput): AuthorPayload
     refreshToken(input: AuthorInput): AuthorPayload
     createAccount(input: AccountInput): Account
+    
     updateAccount(_id: ID!, input: AccountInput): Account
     deleteAccount(_id: ID!): Account
   }

@@ -4,12 +4,12 @@ const { merge } = require("lodash");
 const { allow, shield } = require("graphql-shield");
 const { applyMiddleware } = require("graphql-middleware");
 
-// const post = require("./post");
+const post = require("./post");
 // const comment = require("./comment");
 const account = require("./account");
 
-const typeDefs = [account.typeDefs];
-const resolvers = merge(account.resolvers);
+const typeDefs = [account.typeDefs, post.typeDefs];
+const resolvers = merge(account.resolvers, post.resolvers);
 
 const { isAuthenticated } = require("../../helpers/permission.helper");
 
@@ -17,10 +17,14 @@ const permissions = shield({
   Query: {
     // "*": deny,
     // "*": allow,
+    account: isAuthenticated,
+    accounts: isAuthenticated,
     profile: isAuthenticated,
   },
   Mutation: {
     // "*": deny,
+    updateAccount: isAuthenticated,
+    deleteAccount: isAuthenticated,
   },
 });
 
