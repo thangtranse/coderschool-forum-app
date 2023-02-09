@@ -26,24 +26,24 @@ const plugins = [
 const server = new ApolloServer({
   schema: schemaWithPermissions,
   plugins: plugins,
-  context: ({ req }) => {
+  context: async ({ req }) => {
     let user = null;
     const authHeader = req.headers["authorization"];
-    if (!authHeader) return user;
-
+    if (!authHeader) return { user };
     const bearerToken = authHeader.split(" ");
     const token = bearerToken[1];
-
-    JWT.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, payload) => {
-      if (err) {
-        console.log(err)
-        user = null;
-      } else {
-        user = payload;
+    const statusJwt = await JWT.verify(
+      token,
+      process.env.ACCESS_TOKEN_SECRET,
+      (err, payload) => {
+        if (err) {
+          return null;
+        } else {
+          return payload;
+        }
       }
-    });
-
-    return { user };
+    );
+    return { user: statusJwt };
   },
 });
 

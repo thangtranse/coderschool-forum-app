@@ -35,9 +35,19 @@ const updateUserPost = async (postId, userId, dataUpdate) => {
   );
 };
 
+const deleteUserPost = async (postId, userId) => {
+  const a = await postModel.findOneAndDelete({
+    _id: new mongoose.Types.ObjectId(postId),
+    author: new mongoose.Types.ObjectId(userId),
+  })
+  console.log(a)
+  return a
+};
+
 module.exports = {
   createPost,
   updateUserPost,
+  deleteUserPost,
   count,
   getAll,
   getById,

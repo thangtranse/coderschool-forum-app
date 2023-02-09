@@ -1,7 +1,10 @@
-const createError = require("http-errors");
 const mongoose = require("mongoose");
 
-const { createPost, updateUserPost } = require("../../store/post.store");
+const {
+  createPost,
+  updateUserPost,
+  deleteUserPost,
+} = require("../../store/post.store");
 
 const createNewPost = async (data, userId) => {
   return await createPost({
@@ -14,4 +17,8 @@ const updateUserPostService = async (data, postId, userId) => {
   return await updateUserPost(postId, userId, data);
 };
 
-module.exports = { createNewPost, updateUserPostService };
+const deleteUserPostService = async (postId, userId) => {
+  return await deleteUserPost(postId, userId);
+};
+
+module.exports = { createNewPost, updateUserPostService, deleteUserPostService };

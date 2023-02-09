@@ -9,8 +9,6 @@ const schema = new Schema(
     content: { type: String },
     author: { type: Schema.Types.ObjectId, ref: "account", required: true },
     tags: [{ type: String }],
-    createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date, default: Date.now },
     upvotes: { type: Number, default: 0 },
     downvotes: { type: Number, default: 0 },
     properties: {},
@@ -21,7 +19,6 @@ const schema = new Schema(
 // middleware mongo method save
 schema.pre("save", async function (next) {
   try {
-    console.log("Called before save::", this.phone);
     next();
   } catch (error) {
     next(error);

@@ -27,16 +27,12 @@ const typeDefs = gql`
   }
 
   type PostConnection {
-    data: [PostData!]!
+    data: [Post!]!
     pageInfo: PageInfo!
   }
 
-  type PostData {
-    cursor: String!
-    node: Post!
-  }
-
   type PageInfo {
+    total: Int!
     hasNextPage: Boolean!
     hasPreviousPage: Boolean!
   }
