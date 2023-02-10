@@ -1,14 +1,14 @@
 const commentService = require("../../../service/comment");
 const accountService = require("../../../service/account");
+const postService = require("../../../service/post");
 
 const resolvers = {
   Query: {
     comment: async (parent, { postId }, context) => {
       return commentService.readComment(postId);
     },
-    comments: async (parent, { page = 1, limit = 10 }) => {
-      const commets = await commentService.readComments({ page, limit });
-      return commets;
+    comments: async (parent, { postId, page }) => {
+      return await commentService.readParentComments(postId, page);
     },
   },
   Comment: {
@@ -17,13 +17,18 @@ const resolvers = {
       return await accountService.getAccountByID(author);
     },
     post: async (parent, args) => {
-      return {};
+      const { post } = parent;
+      return await postService.getPostByID(post);
     },
-    parentComment: () => {
-      return {};
+    parentComment: async (parent, args) => {
+      const { parentComment } = parent;
+      return await commentService.readComment(parentComment);
     },
-    childComments: () => {
-      return [];
+    childComments: async (parent, args) => {
+      const { childComments } = parent;
+      return await commentService.readComments({
+        filter: { _id: { $in: childComments } },
+      });
     },
   },
   Mutation: {

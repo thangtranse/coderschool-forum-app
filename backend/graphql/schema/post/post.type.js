@@ -17,9 +17,9 @@ const typeDefs = gql`
   }
 
   input PostInput {
-    title: String
+    title: String!
     content: String!
-    tags: [String]!
+    tags: [String]
   }
 
   type PostPayload {
@@ -33,12 +33,11 @@ const typeDefs = gql`
 
   type PageInfo {
     total: Int!
-    hasNextPage: Boolean!
-    hasPreviousPage: Boolean!
+    hasNextPage: Float
   }
 
   type Query {
-    posts(page: Int, limit: Int): PostConnection!
+    posts(limit: Int, hasNextPage: Float): PostConnection!
     post(_id: ID!): Post
   }
 

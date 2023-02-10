@@ -28,7 +28,7 @@ const typeDefs = gql`
 
   type Query {
     comment(id: ID!): Comment
-    comments(postId: ID): [Comment]
+    comments(postId: ID, page: Int): [Comment]
   }
 
   type Mutation {

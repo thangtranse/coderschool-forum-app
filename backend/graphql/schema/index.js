@@ -13,34 +13,37 @@ const resolvers = merge(account.resolvers, post.resolvers, comment.resolvers);
 
 const { isAuthenticated } = require("../../helpers/permission.helper");
 
-const permissions = shield({
-  Query: {
-    // "*": deny,
-    // "*": allow,
+const permissions = shield(
+  {
+    Query: {
+      // "*": deny,
+      // "*": allow,
 
-    // Account
-    account: isAuthenticated,
-    accounts: isAuthenticated,
-    profile: isAuthenticated,
-    // POST
-    posts: isAuthenticated,
-    post: isAuthenticated,
-    // COMMENT
-    comment: isAuthenticated,
-    comments: isAuthenticated,
+      // Account
+      account: isAuthenticated,
+      accounts: isAuthenticated,
+      profile: isAuthenticated,
+      // POST
+      posts: isAuthenticated,
+      post: isAuthenticated,
+      // COMMENT
+      comment: isAuthenticated,
+      comments: isAuthenticated,
+    },
+    Mutation: {
+      // "*": deny,
+      updateAccount: isAuthenticated,
+      deleteAccount: isAuthenticated,
+      // POST
+      createPost: isAuthenticated,
+      updatePost: isAuthenticated,
+      deletePost: isAuthenticated,
+      // COMMENT
+      addComment: isAuthenticated,
+    },
   },
-  Mutation: {
-    // "*": deny,
-    updateAccount: isAuthenticated,
-    deleteAccount: isAuthenticated,
-    // POST
-    createPost: isAuthenticated,
-    updatePost: isAuthenticated,
-    deletePost: isAuthenticated,
-    // COMMENT
-    addComment: isAuthenticated,
-  },
-});
+  { allowExternalErrors: true }
+);
 
 const schema = makeExecutableSchema({
   typeDefs: [constraintDirectiveTypeDefs, typeDefs],

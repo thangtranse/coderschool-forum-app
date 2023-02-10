@@ -3,15 +3,27 @@ const accountService = require("../../../service/account");
 
 const resolvers = {
   Query: {
-    posts: async (parent, { page = 1, limit = 10 }) => {
-      const posts = await postService.getPosts({ page, limit });
-      const total = await postService.countPosts({ filter: {} });
+    posts: async (parent, args, context) => {
+      const parseArgs = JSON.parse(JSON.stringify(args));
+      const { hasNextPage, limit } = parseArgs;
+      const userId = context.user.userId;
+      const posts = await postService.getUserPosts(
+        {
+          hasNextPage,
+          limit,
+        },
+        userId
+      );
+      const total = await postService.countUserPosts(userId);
+      let isNextPage = null;
+      if (posts.length > 0 && posts.length < total) {
+        isNextPage = new Date(posts[posts.length - 1].createdAt).getTime();
+      }
       return {
         data: posts,
         pageInfo: {
           total: total,
-          hasNextPage: page * limit < total,
-          hasPreviousPage: page > 1,
+          hasNextPage: isNextPage,
         },
       };
     },

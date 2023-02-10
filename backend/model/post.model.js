@@ -10,8 +10,7 @@ const schema = new Schema(
     author: { type: Schema.Types.ObjectId, ref: "account", required: true },
     tags: [{ type: String }],
     upvotes: { type: Number, default: 0 },
-    downvotes: { type: Number, default: 0 },
-    properties: {},
+    downvotes: { type: Number, default: 0 }
   },
   { timestamps: true }
 );

@@ -3,7 +3,6 @@ const commentModel = require("../model/comment.model");
 
 const commentCreate = async (data) => {
   const comment = new commentModel(data);
-  await comment.save();
   if (data.parentComment) {
     await commentModel.findOneAndUpdate(
       {
@@ -15,6 +14,7 @@ const commentCreate = async (data) => {
       { new: true }
     );
   }
+  await comment.save();
   return comment;
 };
 
