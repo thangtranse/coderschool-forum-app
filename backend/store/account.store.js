@@ -1,20 +1,27 @@
 const accountModel = require("../model/account.model");
 
 const getOne = async (filter = {}, projection = {}, options = {}) => {
-  return await accountModel.findOne(filter, projection, options);
+  return await accountModel.findOne(
+    filter,
+    {
+      ...projection,
+      password: true,
+    },
+    options
+  );
 };
 
 const getAll = async ({ filter = {}, limit = 0, page = 1 }) => {
   let setPage = page < 1 ? 1 : page;
   const skip = limit * setPage;
   return await accountModel
-    .find(filter, { __v: false })
+    .find(filter, { __v: false, password: false })
     .limit(limit)
     .skip(skip);
 };
 
 const getById = async (_id) => {
-  return await accountModel.findById(_id);
+  return await accountModel.findById(_id, { password: false });
 };
 
 const saveAuthor = async (data) => {

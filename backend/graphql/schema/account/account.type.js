@@ -4,14 +4,13 @@ const typeDefs = gql`
   type Account {
     _id: ID!
     email: String!
-    password: String!
     createdAt: String!
     updatedAt: String!
   }
 
   input AccountInput {
-    email: String @constraint(minLength: 5, format: "email")
-    password: String
+    email: String! @constraint(minLength: 5, format: "email")
+    password: String!
   }
 
   input AuthorInput {

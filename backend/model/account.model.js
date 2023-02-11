@@ -20,6 +20,7 @@ schema.pre("save", async function (next) {
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(this.password, salt);
     this.password = hashPassword;
+    console.log("password", this)
     next();
   } catch (error) {
     next(error);
