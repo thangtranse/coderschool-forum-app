@@ -7,8 +7,15 @@ const {
 } = require("graphql-constraint-directive");
 const bodyParser = require("body-parser");
 const JWT = require("jsonwebtoken");
+const cors = require("cors");
+
+const corsOptions = {
+  origin: true,
+  credentials: true,
+};
 
 const app = express();
+app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded({ limit: "5mb", extended: true }));
 app.use(express.json({ limit: "5mb" }));
 app.use(
