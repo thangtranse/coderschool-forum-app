@@ -4,6 +4,8 @@ import useIsLoggedIn from "../hook/useIsLoggedIn.js";
 import { Navigate } from "react-router-dom";
 
 export default function UserLayout() {
+  console.log("re-render UserLayout");
+
   const isLoggedIn = useIsLoggedIn();
 
   if (!isLoggedIn) {

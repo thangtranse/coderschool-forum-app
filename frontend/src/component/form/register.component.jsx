@@ -1,55 +1,102 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 // Material
-import { Button, Grid, TextField, Typography } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
+import { Grid, TextField, Typography } from "@mui/material";
 
-function LoginForm() {
-  const [username, setUsername] = useState("");
+function RegisterForm({ onRegister, isError, isLoading }) {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rePassword, setRePassword] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Username:", username);
-    console.log("Password:", password);
-    // Perform authentication here or send data to the server
+    if (password !== rePassword) {
+      alert("Password and re-password do not match");
+      return;
+    }
+    onRegister({ email: email, password: password });
   };
 
-
+  const handleRedirectLogin = () => {
+    navigate("/login");
+  };
   return (
     <Grid container direction="row" justifyContent="center" alignItems="center">
       <form onSubmit={handleSubmit}>
-        <Typography variant="h5" gutterBottom>
-          CoderSchool Discussion
+        <Typography variant="h5" gutterBottom align="center">
+          CoderSchool Forum
         </Typography>
         <TextField
-          label="Username"
+          label="Email"
           type="email"
-          value={username}
-          onChange={(event) => setUsername(event.target.value)}
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
           fullWidth
           margin="normal"
           required
+          disabled={isLoading ? true : false}
+          error={isError ? true : false}
         />
         <TextField
-          label="Password"
+          label="Mật khẩu"
           type="password"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
           fullWidth
           margin="normal"
           required
+          disabled={isLoading ? true : false}
+          error={isError ? true : false}
         />
-        <Button
+        <TextField
+          label="Nhập lại mật khẩu"
+          type="password"
+          value={rePassword}
+          onChange={(event) => setRePassword(event.target.value)}
+          fullWidth
+          margin="normal"
+          required
+          disabled={isLoading ? true : false}
+          error={isError ? true : false}
+        />
+        <LoadingButton
           type="submit"
           variant="outlined"
           size="medium"
           color="primary"
           fullWidth={true}
+          sx={{
+            marginTop: 2,
+          }}
+          disabled={isLoading ? true : false}
+          error={isError ? true : false}
         >
-          Đăng nhập
-        </Button>
+          Đăng ký
+        </LoadingButton>
+        <Typography
+          variant="overline"
+          display="block"
+          gutterBottom
+          align="right"
+          onClick={() => handleRedirectLogin()}
+          sx={[
+            {
+              "&:hover": {
+                color: "#1976d2",
+                cursor: "pointer",
+              },
+            },
+          ]}
+          disabled={isLoading ? true : false}
+          error={isError ? true : false}
+        >
+          Tôi đã có tài khoản. Đăng nhập
+        </Typography>
       </form>
     </Grid>
   );
 }
 
-export default LoginForm;
+export default RegisterForm;

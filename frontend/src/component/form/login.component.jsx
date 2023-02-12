@@ -2,19 +2,18 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 // Material
+import LoadingButton from "@mui/lab/LoadingButton";
 import { Button, Grid, TextField, Typography } from "@mui/material";
 
-function LoginForm() {
+function LoginForm({ onLogin, isError, isLoading }) {
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Username:", username);
-    console.log("Password:", password);
-    // Perform authentication here or send data to the server
+    onLogin({ email, password });
   };
 
   const handleDirect = (event) => {
@@ -25,17 +24,19 @@ function LoginForm() {
   return (
     <Grid container direction="row" justifyContent="center" alignItems="center">
       <form onSubmit={handleSubmit}>
-        <Typography variant="h5" gutterBottom>
-          CoderSchool Discussion
+        <Typography variant="h5" gutterBottom align="center">
+          CoderSchool Forum
         </Typography>
         <TextField
-          label="Username"
+          label="Email"
           type="email"
-          value={username}
-          onChange={(event) => setUsername(event.target.value)}
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
           fullWidth
           margin="normal"
           required
+          disabled={isLoading ? true : false}
+          error={isError ? true : false}
         />
         <TextField
           label="Password"
@@ -45,22 +46,34 @@ function LoginForm() {
           fullWidth
           margin="normal"
           required
+          disabled={isLoading ? true : false}
+          error={isError ? true : false}
         />
-        <Button
+        {isError}
+        <LoadingButton
           type="submit"
           variant="outlined"
           size="medium"
           color="primary"
           fullWidth={true}
+          sx={{
+            marginTop: 2,
+          }}
+          loading={isLoading ? true : false}
+          disabled={isLoading ? true : false}
         >
           Đăng nhập
-        </Button>
+        </LoadingButton>
         <Button
           onClick={handleDirect}
           variant="outlined"
           size="medium"
           color="primary"
           fullWidth={true}
+          sx={{
+            marginTop: 1,
+          }}
+          disabled={isLoading ? true : false}
         >
           Đăng ký
         </Button>
