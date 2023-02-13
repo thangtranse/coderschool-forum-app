@@ -5,6 +5,7 @@ import BasicLayout from "../layout/basicLayout";
 import UserLayout from "../layout/userLayout";
 // Page
 import ErrorPage from "../page/error-page";
+import MyFeedPage from "../page/my-feed";
 import LoginPage from "../page/login";
 import NewsPage from "../page/news";
 import ProfilePage from "../page/profile";
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <NewsPage />,
+      },
+      {
+        path: "my-feeds",
+        element: <MyFeedPage />,
       },
       {
         path: "profile",

@@ -1,15 +1,16 @@
 // React
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 // Material
 import LoadingButton from "@mui/lab/LoadingButton";
 import { Button, Grid, TextField, Typography } from "@mui/material";
 
-function LoginForm({ onLogin, isError, isLoading }) {
+function LoginForm({ proEmail = "", onLogin, isError, isLoading }) {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(proEmail);
   const [password, setPassword] = useState("");
+  const [isPasswordFieldFocus, setIsPasswordFieldFocus] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -20,6 +21,12 @@ function LoginForm({ onLogin, isError, isLoading }) {
     event.preventDefault();
     navigate("/register");
   };
+
+  useEffect(() => {
+    if (proEmail) {
+      setIsPasswordFieldFocus(true)
+    }
+  }, [proEmail]);
 
   return (
     <Grid container direction="row" justifyContent="center" alignItems="center">
@@ -48,6 +55,7 @@ function LoginForm({ onLogin, isError, isLoading }) {
           required
           disabled={isLoading ? true : false}
           error={isError ? true : false}
+          focused={isPasswordFieldFocus}
         />
         {isError}
         <LoadingButton

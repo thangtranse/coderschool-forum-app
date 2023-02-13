@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 // Material
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -9,6 +9,13 @@ function RegisterForm({ onRegister, isError, isLoading }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
+
+  useEffect(() => {
+    if (isError) {
+      setPassword("");
+      setRePassword("");
+    }
+  }, [isError]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -22,6 +29,7 @@ function RegisterForm({ onRegister, isError, isLoading }) {
   const handleRedirectLogin = () => {
     navigate("/login");
   };
+  
   return (
     <Grid container direction="row" justifyContent="center" alignItems="center">
       <form onSubmit={handleSubmit}>
@@ -61,6 +69,20 @@ function RegisterForm({ onRegister, isError, isLoading }) {
           disabled={isLoading ? true : false}
           error={isError ? true : false}
         />
+        <Typography
+          variant="overline"
+          display="block"
+          gutterBottom
+          align="left"
+          sx={[
+            {
+              color: "red",
+            },
+          ]}
+          visibility={isLoading ? true : false}
+        >
+          {isError}
+        </Typography>
         <LoadingButton
           type="submit"
           variant="outlined"
@@ -68,7 +90,7 @@ function RegisterForm({ onRegister, isError, isLoading }) {
           color="primary"
           fullWidth={true}
           sx={{
-            marginTop: 2,
+            marginTop: 1,
           }}
           disabled={isLoading ? true : false}
           error={isError ? true : false}

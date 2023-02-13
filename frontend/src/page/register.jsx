@@ -20,7 +20,10 @@ export default function LoginPage() {
       const { data } = await createAccount({
         variables: { input: { email, password } },
       });
-      navigate("/news");
+      navigate("/login", {
+        replace: true,
+        state: { email: data.createAccount.email },
+      });
     } catch (error) {
       setError(error.message);
     }

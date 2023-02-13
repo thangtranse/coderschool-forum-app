@@ -1,8 +1,8 @@
 // React
-import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 // Material UI
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -14,11 +14,12 @@ import { LOGIN_MUTATION } from "../apollo/query/user";
 import LoginFormComponent from "../component/form/login.component";
 
 export default function LoginPage() {
+  const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [error, setError] = useState(null);
   const [loginMutation, { loading }] = useMutation(LOGIN_MUTATION);
-
+  
   const handleLogin = async ({ email, password }) => {
     try {
       const { data } = await loginMutation({
@@ -45,6 +46,7 @@ export default function LoginPage() {
             onLogin={handleLogin}
             isError={error}
             isLoading={loading}
+            proEmail={(location.state && location.state.email) || ""}
           />
         </Box>
       </Container>

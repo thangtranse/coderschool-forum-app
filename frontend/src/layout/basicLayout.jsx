@@ -8,8 +8,6 @@ import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 // Hook
 import useIsLoggedIn from "../hook/useIsLoggedIn.js";
-//
-import { fetchProfile } from "../reducer/profile";
 
 export default function BasicLayout() {
   console.log("re-render BasicLayout");
@@ -20,15 +18,13 @@ export default function BasicLayout() {
   }
 
   return (
-    <>
-      <React.Fragment>
-        <CssBaseline />
-        <Container maxWidth="sm">
-          <Box sx={{ height: "100vh" }}>
-            <Outlet />
-          </Box>
-        </Container>
-      </React.Fragment>
-    </>
+    <React.Fragment>
+      <CssBaseline />
+      <Container maxWidth="sm">
+        <Box sx={{ height: "100vh" }}>
+          <Outlet />
+        </Box>
+      </Container>
+    </React.Fragment>
   );
 }

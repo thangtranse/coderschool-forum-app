@@ -1,20 +1,28 @@
+// React
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
+// Material
+import Container from "@mui/material/Container";
+import CssBaseline from "@mui/material/CssBaseline";
+import Grid from "@mui/material/Grid";
+// Component
+import AppBarComponent from "../component/appBar";
 import useIsLoggedIn from "../hook/useIsLoggedIn.js";
-import { Navigate } from "react-router-dom";
 
-export default function UserLayout() {
-  console.log("re-render UserLayout");
-
+export default function UserLayout(props) {
   const isLoggedIn = useIsLoggedIn();
 
   if (!isLoggedIn) {
     return <Navigate to="/login" />;
   }
 
+  console.log("re-render UserLayout");
   return (
-    <>
-      <Outlet />
-    </>
+    <React.Fragment>
+      <CssBaseline />
+      <AppBarComponent>
+          <Outlet />
+      </AppBarComponent>
+    </React.Fragment>
   );
 }
