@@ -8,6 +8,7 @@ const LOGIN_MUTATION = gql`
     }
   }
 `;
+
 const REGISTER_MUTATION = gql`
   mutation createAccount($input: AccountInput) {
     createAccount(input: $input) {
