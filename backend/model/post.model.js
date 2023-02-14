@@ -9,8 +9,20 @@ const schema = new Schema(
     content: { type: String },
     author: { type: Schema.Types.ObjectId, ref: "account", required: true },
     tags: [{ type: String }],
-    upvotes: { type: Number, default: 0 },
-    downvotes: { type: Number, default: 0 }
+    upvotes: {
+      users: [{ type: Schema.Types.ObjectId, ref: "account" }],
+      count: {
+        type: Number,
+        default: 0,
+      },
+    },
+    downvotes: {
+      users: [{ type: Schema.Types.ObjectId, ref: "account" }],
+      count: {
+        type: Number,
+        default: 0,
+      },
+    },
   },
   { timestamps: true }
 );

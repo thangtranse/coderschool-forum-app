@@ -1,21 +1,33 @@
 const mongoose = require("mongoose");
 
-const { getById, getAll } = require("../../store/comment.store");
+const { getById, getAll, count } = require("../../store/comment.store");
 
-const readParentComments = async (postId, page) => {
+const countAllPostComment = async (postId) => {
+  const filter = {
+    post: new mongoose.Types.ObjectId(postId),
+  };
+  return await count({ filter });
+};
+
+const readParentComments = async (postId, limit) => {
   const filter = {
     post: new mongoose.Types.ObjectId(postId),
     parentComment: null,
   };
-  return await getAll({ filter, page });
+  return await getAll({ filter, limit });
 };
 
-const readComments = async ({ filter, page, limit }) => {
-  return await getAll({ filter, page, limit });
+const readComments = async ({ filter, limit }) => {
+  return await getAll({ filter, limit });
 };
 
 const readComment = async (_id) => {
   return await getById(_id);
 };
 
-module.exports = { readComments, readComment, readParentComments };
+module.exports = {
+  countAllPostComment,
+  readComments,
+  readComment,
+  readParentComments,
+};

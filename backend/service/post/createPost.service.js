@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 const {
   createPost,
   updateUserPost,
@@ -20,5 +19,7 @@ const updateUserPostService = async (data, postId, userId) => {
 const deleteUserPostService = async (postId, userId) => {
   return await deleteUserPost(postId, userId);
 };
+
+
 
 module.exports = { createNewPost, updateUserPostService, deleteUserPostService };

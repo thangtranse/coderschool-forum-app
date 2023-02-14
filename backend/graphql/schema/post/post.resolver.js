@@ -1,5 +1,6 @@
 const postService = require("../../../service/post");
 const accountService = require("../../../service/account");
+const commentService = require("../../../service/comment");
 
 const resolvers = {
   Query: {
@@ -35,7 +36,36 @@ const resolvers = {
   Post: {
     author: async (parent, args) => {
       const { author } = parent;
-      return await accountService.getAccountByID(author);
+      return accountService.getAccountByID(author);
+    },
+    upvotes: async (parent, args) => {
+      const { upvotes } = parent;
+      const { users, count } = upvotes;
+      return {
+        users: accountService.getAllAccount({
+          filter: { _id: { $in: users } },
+        }),
+        count: count,
+      };
+    },
+    downvotes: async (parent, args) => {
+      const { downvotes } = parent;
+      const { users, count } = downvotes;
+      return {
+        users: accountService.getAllAccount({
+          filter: { _id: { $in: users } },
+        }),
+        count: count,
+      };
+    },
+    comments: async (parent, args) => {
+      const { _id: postId } = parent;
+      const comments = await commentService.readParentComments(postId, 4);
+      const countComments = await commentService.countAllPostComment(postId);
+      return {
+        comments: comments,
+        count: countComments,
+      };
     },
   },
   Mutation: {
@@ -63,6 +93,50 @@ const resolvers = {
       let status = false;
       if (result) status = true;
       return { status };
+    },
+    upvotePost: async (parent, args, context) => {
+      const userId = context.user.userId;
+      const { _id: postId } = JSON.parse(JSON.stringify(args));
+      const result = await postService.upvotePost(postId, userId);
+      let status = false;
+      const upvotes = {
+        users: [],
+        count: 0,
+      };
+      const downvotes = {
+        users: [],
+        count: 0,
+      };
+      if (result) {
+        status = true;
+        upvotes.users = result.upvotes.users;
+        upvotes.count = result.upvotes.count;
+        downvotes.users = result.downvotes.users;
+        downvotes.count = result.downvotes.count;
+      }
+      return { status, upvotes, downvotes };
+    },
+    downvotePost: async (parent, args, context) => {
+      const userId = context.user.userId;
+      const { _id: postId } = JSON.parse(JSON.stringify(args));
+      const result = await postService.downvotePost(postId, userId);
+      let status = false;
+      const upvotes = {
+        users: [],
+        count: 0,
+      };
+      const downvotes = {
+        users: [],
+        count: 0,
+      };
+      if (result) {
+        status = true;
+        upvotes.users = result.upvotes.users;
+        upvotes.count = result.upvotes.count;
+        downvotes.users = result.downvotes.users;
+        downvotes.count = result.downvotes.count;
+      }
+      return { status, upvotes, downvotes };
     },
   },
 };

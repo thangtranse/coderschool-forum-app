@@ -38,6 +38,8 @@ const permissions = shield(
       createPost: isAuthenticated,
       updatePost: isAuthenticated,
       deletePost: isAuthenticated,
+      upvotePost: isAuthenticated,
+      downvotePost: isAuthenticated,
       // COMMENT
       addComment: isAuthenticated,
     },

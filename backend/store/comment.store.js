@@ -22,13 +22,12 @@ const getOne = async (filter = {}, projection = {}, options = {}) => {
   return await commentModel.findOne(filter, projection, options);
 };
 
-const getAll = async ({ filter = {}, limit = 10, page = 1 }) => {
-  let setPage = page < 1 ? 1 : page;
-  const skip = limit * (setPage - 1);
-  return await commentModel
-    .find(filter, { __v: false })
-    .limit(limit)
-    .skip(skip);
+const count = async (filter = {}) => {
+  return await commentModel.countDocuments(filter);
+};
+
+const getAll = async ({ filter = {}, limit = 10 }) => {
+  return await commentModel.find(filter, { __v: false }).sort({createdAt: -1}).limit(limit);
 };
 
 const getById = async (_id) => {
@@ -36,6 +35,7 @@ const getById = async (_id) => {
 };
 
 module.exports = {
+  count,
   commentCreate,
   getOne,
   getAll,

@@ -7,11 +7,26 @@ const typeDefs = gql`
     content: String!
     post: Post!
     parentComment: Comment
-    childComments: [Comment]
-    upvotes: Int!
-    downvotes: Int!
+    childComments: ChildComment
+    upvotes: Upvote!
+    downvotes: Downvote!
     createdAt: String!
     updatedAt: String!
+  }
+
+  type ChildComment {
+    comments: [Comment]
+    count: Int!
+  }
+
+  type Downvote {
+    users: [Account]
+    count: Int!
+  }
+
+  type Upvote {
+    users: [Account]
+    count: Int!
   }
 
   input CreateCommentInput {
@@ -28,13 +43,21 @@ const typeDefs = gql`
 
   type Query {
     comment(id: ID!): Comment
-    comments(postId: ID, page: Int): [Comment]
+    comments(postId: ID, limit: Int): [Comment]
+  }
+
+  type VotePayload {
+    status: Boolean
+    upvotes: Upvote
+    downvotes: Downvote
   }
 
   type Mutation {
     addComment(input: CreateCommentInput!): Comment
     updateComment(input: UpdateCommentInput!): Comment
     deleteComment(id: ID!): Comment
+    upvoteComment(id: ID!): VotePayload
+    downvoteComment(id: ID!): VotePayload
   }
 `;
 

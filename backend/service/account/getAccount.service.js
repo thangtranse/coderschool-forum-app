@@ -1,11 +1,7 @@
-const {
-  saveAuthor,
-  getById,
-  getAll,
-} = require("../../store/account.store");
+const { saveAuthor, getById, getAll } = require("../../store/account.store");
 
-const getAllAccount = async () => {
-  return await getAll();
+const getAllAccount = async ({ filter }) => {
+  return await getAll({ filter });
 };
 
 const getAccountByID = async (_id) => {

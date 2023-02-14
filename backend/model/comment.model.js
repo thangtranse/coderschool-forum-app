@@ -28,8 +28,20 @@ const schema = new Schema(
         ref: "comment",
       },
     ],
-    upvotes: { type: Number, default: 0 },
-    downvotes: { type: Number, default: 0 },
+    upvotes: {
+      users: [{ type: Schema.Types.ObjectId, ref: "account" }],
+      count: {
+        type: Number,
+        default: 0,
+      },
+    },
+    downvotes: {
+      users: [{ type: Schema.Types.ObjectId, ref: "account" }],
+      count: {
+        type: Number,
+        default: 0,
+      },
+    },
   },
   { timestamps: true }
 );

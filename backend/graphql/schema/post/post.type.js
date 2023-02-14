@@ -6,14 +6,27 @@ const typeDefs = gql`
     title: String
     content: String!
     tags: [String]!
-
     author: Account
-
-    upvotes: Int!
-    downvotes: Int!
-
+    upvotes: Upvote
+    comments: CommentType
+    downvotes: Downvote
     createdAt: String!
     updatedAt: String!
+  }
+
+  type Upvote {
+    users: [Account]
+    count: Int!
+  }
+  
+  type CommentType {
+    comments: [Comment]
+    count: Int!
+  }
+
+  type Downvote {
+    users: [Account]
+    count: Int!
   }
 
   input PostInput {
@@ -24,6 +37,12 @@ const typeDefs = gql`
 
   type PostPayload {
     status: Boolean
+  }
+
+  type VotePayload {
+    status: Boolean
+    upvotes: Upvote
+    downvotes: Downvote
   }
 
   type PostConnection {
@@ -45,6 +64,8 @@ const typeDefs = gql`
     createPost(input: PostInput): Post
     updatePost(_id: ID!, input: PostInput): Post
     deletePost(_id: ID!): PostPayload
+    upvotePost(_id: ID!): VotePayload
+    downvotePost(_id: ID!): VotePayload
   }
 `;
 
