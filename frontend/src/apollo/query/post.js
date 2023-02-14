@@ -31,9 +31,39 @@ const GET_POSTS_QUERY = gql`
           _id
           email
         }
-        upvotes
-        downvotes
+        upvotes {
+          count
+        }
+        downvotes {
+          count
+        }
         tags
+        comments {
+          comments {
+            id
+            author {
+              _id
+              email
+            }
+            content
+            childComments {
+              count
+            }
+            upvotes {
+              users {
+                _id
+              }
+              count
+            }
+            downvotes {
+              users {
+                _id
+              }
+              count
+            }
+          }
+          count
+        }
       }
       pageInfo {
         total
@@ -43,4 +73,44 @@ const GET_POSTS_QUERY = gql`
   }
 `;
 
-export { CREATE_POST_MUTATION, GET_POSTS_QUERY };
+const UPVOTE_POST = gql`
+  mutation UpvotePost($id: ID!) {
+    upvotePost(_id: $id) {
+      status
+      upvotes {
+        users {
+          _id
+        }
+        count
+      }
+      downvotes {
+        users {
+          _id
+        }
+        count
+      }
+    }
+  }
+`;
+
+const DOWNVOTE_POST = gql`
+  mutation DownvotePost($id: ID!) {
+    downvotePost(_id: $id) {
+      status
+      upvotes {
+        users {
+          _id
+        }
+        count
+      }
+      downvotes {
+        users {
+          _id
+        }
+        count
+      }
+    }
+  }
+`;
+
+export { CREATE_POST_MUTATION, GET_POSTS_QUERY, UPVOTE_POST, DOWNVOTE_POST };

@@ -18,6 +18,7 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [error, setError] = useState(null);
+
   const [loginMutation, { loading }] = useMutation(LOGIN_MUTATION);
 
   const handleLogin = async ({ email, password }) => {

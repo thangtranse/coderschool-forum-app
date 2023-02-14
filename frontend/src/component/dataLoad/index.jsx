@@ -60,11 +60,13 @@ const LoadDataComponent = ({ GET_POSTS_QUERY }) => {
         return (
           <FeedComponent
             key={item._id}
+            _id={item._id}
             title={item.title}
             author={{ name: item.author.email }}
             markdown={item.content}
-            upvote={item.upvotes}
-            downvote={item.downvotes}
+            upvote={item.upvotes.count}
+            downvote={item.downvotes.count}
+            comments={item.comments}
             tags={item.tags}
           />
         );

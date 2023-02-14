@@ -1,46 +1,23 @@
 // React
+import { useMutation } from "@apollo/client";
 import { marked } from "marked";
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
+import { useSelector } from "react-redux";
 // MUI
-import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
-import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
-import { Avatar, Box, Typography } from "@mui/material";
-
-function stringAvatar(name) {
-  return {
-    sx: {
-      bgcolor: stringToColor(name),
-    },
-    children: `${
-      name.indexOf(" ") !== -1
-        ? name.split(" ")[0][0] + " " + name.split(" ")[1][0]
-        : name
-    }`,
-  };
-}
-
-function stringToColor(string) {
-  let hash = 0;
-  let i;
-  /* eslint-disable no-bitwise */
-  for (i = 0; i < string.length; i += 1) {
-    hash = string.charCodeAt(i) + ((hash << 5) - hash);
-  }
-  let color = "#";
-  for (i = 0; i < 3; i += 1) {
-    const value = (hash >> (i * 8)) & 0xff;
-    color += `00${value.toString(16)}`.slice(-2);
-  }
-  /* eslint-enable no-bitwise */
-  return color;
-}
+import { Box, Typography } from "@mui/material";
+import { DOWNVOTE_POST, UPVOTE_POST } from "../../apollo/query/post";
+import CommentList from "../comment";
+import VoteComponent from "../vote";
+// Component
+import AvatarComponent from "../avatar";
 
 function FeedComponent({
+  _id,
   author = { name: "Trần Minh Thắng" },
   title = "",
   markdown = "",
   tags = [],
-  comment = [{ content: "a" }],
+  comments = { count: 0, comments: [] },
   upvote = 0,
   downvote = 0,
   ...props
@@ -48,6 +25,7 @@ function FeedComponent({
   const getMarkdownText = () => {
     return { __html: marked.parse(markdown) };
   };
+
   return (
     <Box
       {...props}
@@ -65,7 +43,7 @@ function FeedComponent({
           alignItems: "baseline",
         }}
       >
-        <Avatar {...stringAvatar(author && author.name ? author.name : "")} />
+        <AvatarComponent author={{ email: author.email, name: author.name }} />
         <Typography
           sx={{ cursor: "pointer" }}
           display="block"
@@ -92,27 +70,30 @@ function FeedComponent({
           flexDirection: "row",
           gap: "5px",
           alignItems: "stretch !important",
+          justifyContent: "space-between",
         }}
       >
-        <ThumbUpOffAltIcon sx={{ cursor: "pointer" }} />{" "}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            gap: "5px",
+            alignItems: "stretch !important",
+          }}
+        >
+          <VoteComponent _id={_id} up={upvote} down={downvote} type={"post"}/>
+        </Box>
         <Typography
           sx={{ cursor: "pointer" }}
           variant="overline"
           display="block"
           gutterBottom
-        >
-          {upvote}
-        </Typography>
-        {`|`}
-        <ThumbDownOffAltIcon sx={{ cursor: "pointer" }} />
-        <Typography
-          sx={{ cursor: "pointer" }}
-          variant="overline"
-          display="block"
-          gutterBottom
-        >
-          {downvote}
-        </Typography>
+        >{`${comments.count} commennt${
+          comments.count > 0 ? "s" : ""
+        }`}</Typography>
+      </Box>
+      <Box>
+        <CommentList comments={comments.comments} total={comments.count} />
       </Box>
     </Box>
   );
