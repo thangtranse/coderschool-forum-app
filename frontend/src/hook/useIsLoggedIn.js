@@ -7,6 +7,7 @@ import { logoutAction } from "../reducer/authen";
 import { setProfile } from "../reducer/profile";
 
 function useIsLoggedIn() {
+  const dispatch = useDispatch();
   const accessToken = useSelector((state) => state.authentication.accessToken);
   const { data, error } = useQuery(GET_PROFILE, {
     context: {
@@ -15,7 +16,6 @@ function useIsLoggedIn() {
       },
     },
   });
-  const dispatch = useDispatch();
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     if (data) {
       dispatch(setProfile(data.profile));
@@ -27,7 +27,6 @@ function useIsLoggedIn() {
       return false;
     }
   });
-
   useEffect(() => {
     if (data) {
       dispatch(setProfile(data.profile));
@@ -39,7 +38,6 @@ function useIsLoggedIn() {
       setIsLoggedIn(false);
     }
   }, [data, error, dispatch]);
-
   return isLoggedIn;
 }
 

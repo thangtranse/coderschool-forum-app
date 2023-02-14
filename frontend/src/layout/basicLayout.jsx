@@ -12,11 +12,9 @@ import useIsLoggedIn from "../hook/useIsLoggedIn.js";
 export default function BasicLayout() {
   console.log("re-render BasicLayout");
   const isLoggedIn = useIsLoggedIn();
-
-  if (isLoggedIn) {
+  if (isLoggedIn && typeof isLoggedIn === "boolean") {
     return <Navigate to="/news" />;
   }
-
   return (
     <React.Fragment>
       <CssBaseline />

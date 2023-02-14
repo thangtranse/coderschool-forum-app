@@ -1,11 +1,8 @@
 // React
-import { useMutation } from "@apollo/client";
 import { marked } from "marked";
-import React, { memo, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { memo } from "react";
 // MUI
 import { Box, Typography } from "@mui/material";
-import { DOWNVOTE_POST, UPVOTE_POST } from "../../apollo/query/post";
 import CommentList from "../comment";
 import VoteComponent from "../vote";
 // Component
@@ -22,6 +19,7 @@ function FeedComponent({
   downvote = 0,
   ...props
 }) {
+
   const getMarkdownText = () => {
     return { __html: marked.parse(markdown) };
   };
@@ -81,7 +79,7 @@ function FeedComponent({
             alignItems: "stretch !important",
           }}
         >
-          <VoteComponent _id={_id} up={upvote} down={downvote} type={"post"}/>
+          <VoteComponent _id={_id} up={upvote} down={downvote} type={"post"} />
         </Box>
         <Typography
           sx={{ cursor: "pointer" }}
@@ -93,7 +91,12 @@ function FeedComponent({
         }`}</Typography>
       </Box>
       <Box>
-        <CommentList comments={comments.comments} total={comments.count} />
+        <CommentList
+          author={{ email: author.email, name: author.name }}
+          postId={_id}
+          comments={comments.comments}
+          total={comments.count}
+        />
       </Box>
     </Box>
   );

@@ -4,7 +4,6 @@ import React from "react";
 import CommentComponent from "./comment";
 
 const CommentList = ({ comments = [] }) => {
-  console.log(comments);
   return comments.map((comment) => (
     <CommentComponent
       key={comment.id}
@@ -19,6 +18,8 @@ const CommentList = ({ comments = [] }) => {
       }}
       downVote={comment.downvotes.count}
       upVote={comment.upvotes.count}
+      parentComment={comment.parentComment}
+      postId={comment.post._id}
     />
   ));
 };

@@ -3,15 +3,17 @@ import { useLazyQuery } from "@apollo/client";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 // MUI
-import AccountCircle from "@mui/icons-material/AccountCircle";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { Box, TextField, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 // Import
 import { useEffect } from "react";
-import { COMMENT_QUERY } from "../../apollo/query/comment";
+import {
+  COMMENT_QUERY
+} from "../../apollo/query/comment";
 import AvatarComponent from "../avatar";
-import Comments from "./list";
 import VoteComponent from "../vote";
+import Comments from "./list";
+import ReplyComponent from "./reply";
 
 const Comment = ({
   commentId,
@@ -20,6 +22,8 @@ const Comment = ({
   childComments: { count },
   upVote = 0,
   downVote = 0,
+  parentComment = null,
+  postId = "",
 }) => {
   const accessToken = useSelector((state) => state.authentication.accessToken);
   const [child, setChild] = useState([]);
@@ -97,7 +101,8 @@ const Comment = ({
         <Box
           sx={{
             display: "flex",
-            alignItems: "flex-end",
+            flexDirection: "column",
+            alignItems: "flex-start",
             cursor: "pointer",
             "& .MuiTextField-root": { m: 1, width: "30ch" },
             "& p": {
@@ -105,25 +110,14 @@ const Comment = ({
             },
           }}
         >
-          <Typography
-            variant="overline"
-            display="block"
-            gutterBottom
-          >{`Trả lời`}</Typography>
-          <Box
-            sx={{
-              display: "none",
-              alignItems: "flex-end",
-              "& .MuiTextField-root": { m: 1, width: "30ch" },
-            }}
-          >
-            <AccountCircle sx={{ color: "action.active", mr: 1, my: 0.5 }} />
-            <TextField
-              id="input-commennt-sx"
-              label={`${name || email} trả lời bình luận`}
-              variant="standard"
-            />
-          </Box>
+          <ReplyComponent
+            commentId={commentId}
+            author={{ email, name }}
+            childComments={count}
+            parentComment={parentComment}
+            postId={postId}
+            onLoadComment={loadComment}
+          />
         </Box>
         <Comments comments={child} />
         <Box
