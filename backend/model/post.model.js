@@ -1,28 +1,15 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-
+const { voteSchema } = require("./ext.schema");
 const dbConnected = require("../datasource/connection.mongodb");
-
 const schema = new Schema(
   {
     title: { type: String, required: true },
     content: { type: String },
     author: { type: Schema.Types.ObjectId, ref: "account", required: true },
     tags: [{ type: String }],
-    upvotes: {
-      users: [{ type: Schema.Types.ObjectId, ref: "account" }],
-      count: {
-        type: Number,
-        default: 0,
-      },
-    },
-    downvotes: {
-      users: [{ type: Schema.Types.ObjectId, ref: "account" }],
-      count: {
-        type: Number,
-        default: 0,
-      },
-    },
+    upvotes: voteSchema,
+    downvotes: voteSchema,
   },
   { timestamps: true }
 );

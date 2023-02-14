@@ -1,0 +1,68 @@
+version: '3.9'
+
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - REDIS_URI=redis://redis:6379  
+      - REACT_APP_GRAPH_QL_PATH=backend://backend:3000/graphql
+  backend:
+    build: ./backend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongodb-primary
+      - redis
+    environment:
+      - PORT=3000
+      - MONGO_URI=mongodb://root:password123@mongo:27017/coderschool?authSource=admin
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+  redis:
+    image: redis
+  mongodb-primary:
+    image: "bitnami/mongodb:5.0.10"
+    container_name: mongo_mongodb-primary_1
+    restart: on-failure
+    ports:
+      - 27017:27017
+    environment:
+      - MONGODB_ADVERTISED_HOSTNAME=mongodb-primary
+      - MONGODB_REPLICA_SET_MODE=primary
+      - MONGODB_ROOT_PASSWORD=password123
+      - MONGODB_REPLICA_SET_KEY=replicasetkey123
+    volumes:
+      - "./mongodb_master_data:/bitnami"
+
+  mongodb-secondary:
+    image: "bitnami/mongodb:5.0.10"
+    container_name: mongo_mongodb-secondary_1
+    restart: on-failure
+    depends_on:
+      - mongodb-primary
+    environment:
+      - MONGODB_ADVERTISED_HOSTNAME=mongodb-secondary
+      - MONGODB_REPLICA_SET_MODE=secondary
+      - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
+      - MONGODB_INITIAL_PRIMARY_PORT_NUMBER=27017
+      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
+      - MONGODB_REPLICA_SET_KEY=replicasetkey123
+  mongodb-arbiter:
+    image: "bitnami/mongodb:5.0.10"
+    container_name: mongo_mongodb-arbiter_1
+    restart: on-failure
+    depends_on:
+      - mongodb-primary
+    environment:
+      - MONGODB_ADVERTISED_HOSTNAME=mongodb-arbiter
+      - MONGODB_REPLICA_SET_MODE=arbiter
+      - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
+      - MONGODB_INITIAL_PRIMARY_PORT_NUMBER=27017
+      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
+      - MONGODB_REPLICA_SET_KEY=replicasetkey123
+volumes:
+  mongodb_master_data:
+    driver: local

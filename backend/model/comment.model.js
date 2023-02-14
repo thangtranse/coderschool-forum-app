@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-
+const { voteSchema } = require("./ext.schema");
 const dbConnected = require("../datasource/connection.mongodb");
 const schema = new Schema(
   {
@@ -28,20 +28,8 @@ const schema = new Schema(
         ref: "comment",
       },
     ],
-    upvotes: {
-      users: [{ type: Schema.Types.ObjectId, ref: "account" }],
-      count: {
-        type: Number,
-        default: 0,
-      },
-    },
-    downvotes: {
-      users: [{ type: Schema.Types.ObjectId, ref: "account" }],
-      count: {
-        type: Number,
-        default: 0,
-      },
-    },
+    upvotes: voteSchema,
+    downvotes: voteSchema,
   },
   { timestamps: true }
 );

@@ -1,0 +1,600 @@
+{
+	"info": {
+		"_postman_id": "57d6f3f3-09ce-49c2-bc1a-7742a0b13e27",
+		"name": "Coderschool-final",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4875424"
+	},
+	"item": [
+		{
+			"name": "mutation Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2M2UzYmZhMGY2OGU4NzIyODFlZmU4N2QiLCJpYXQiOjE2NzU5MTU4NDgsImV4cCI6MTY3NTkxNTg3OH0.52Ukek8lV_j6egGYU0AGQkalLggVVWBxEnGt7yG18pk"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Origin",
+						"value": "https://studio.apollographql.com"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "cross-site"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Not_A Brand\";v=\"99\", \"Google Chrome\";v=\"109\", \"Chromium\";v=\"109\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation Login($input: AccountInput) {\n  login(input: $input) {\n    access_token\n    refresh_token\n  }\n}",
+						"variables": "{\n    \"input\": {\"email\": \"thangtran.se.1@gmail.com\", \"password\": \"thangtm13@123\"}\n}"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mutation CreateAccount",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2M2UzYmZhMGY2OGU4NzIyODFlZmU4N2QiLCJpYXQiOjE2NzU5MTU4NDgsImV4cCI6MTY3NTkxNTg3OH0.52Ukek8lV_j6egGYU0AGQkalLggVVWBxEnGt7yG18pk"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Origin",
+						"value": "https://studio.apollographql.com"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "cross-site"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Not_A Brand\";v=\"99\", \"Google Chrome\";v=\"109\", \"Chromium\";v=\"109\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation CreateAccount($input: AccountInput) {\n  createAccount(input: $input) {\n    _id\n    email\n  }\n}",
+						"variables": "{\n    \"input\": {\n        \"email\": \"thangtran.se.1@gmail.com\",\n        \"password\": \"thangtm13@123\"\n    }\n}"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "query Profile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN_CODERSCHOOL}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query Profile {\n  profile {\n    _id\n    email\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mutation CreatePost",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN_CODERSCHOOL}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation CreatePost($input: PostInput) {\n  createPost(input: $input) {\n    _id\n    title\n    content\n    tags\n    author {\n      _id\n      email\n    }\n    createdAt\n    updatedAt\n  }\n}",
+						"variables": "{\n  \"input\": {\n    \"title\": \"{{$randomPhrase}}\",\n    \"content\": \"{{$randomLoremParagraph}}\",\n    \"tags\": [\"thang\"]\n  }\n}"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "query Posts",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN_CODERSCHOOL}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "  query Posts($limit: Int, $hasNextPage: Float) {\n    posts(limit: $limit, hasNextPage: $hasNextPage) {\n      data {\n        _id\n        title\n        createdAt\n        author {\n          _id\n          email\n        }\n        content\n        upvotes {\n          users {\n              _id\n              email\n          }\n          count\n        }\n        downvotes {\n          users{\n              _id\n              email\n          }\n          count\n        }\n        tags\n      }\n      pageInfo {\n        total\n        hasNextPage\n      }\n    }\n  }",
+						"variables": "{\n  \"limit\": 10,\n  \"hasNextPage\": null\n}"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "query Post",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN_CODERSCHOOL}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query Post($id: ID!) {\n  post(_id: $id) {\n    _id\n    comments {\n        comments {\n            id\n            author {\n                _id\n                email\n            }\n            content\n            childComments {\n                count\n            }\n        }\n        count\n    }\n    createdAt\n  }\n}",
+						"variables": "{\n  \"id\": \"63ea39e3c1a6a81877ed1e7c\"\n}"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mutation UpdatePost",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN_CODERSCHOOL}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation UpdatePost{\n  updatePost(_id: \"63e4725790572a0c248f4d4b\", input: {content: \"Tôi đã thay đổi\", tags: [], title: \"Trần Minh Thắng\"}) {\n    _id\n    content\n    author {\n      email\n    }\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mutation UpvotePost",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN_CODERSCHOOL}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation UpvotePost($id: ID!) {\n  upvotePost(_id: $id) {\n    status\n    upvotes {\n        users {\n            _id\n        }\n        count\n    }\n    downvotes {\n        users {\n            _id\n        }\n        count\n    }\n  }\n}",
+						"variables": "{\n    \"id\": \"63ea39e3c1a6a81877ed1e7c\"\n}"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mutation UpvoteComment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN_CODERSCHOOL}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "  mutation UpvoteComment($id: ID!) {\n    upvoteComment(id: $id) {\n      status\n      upvotes {\n        users {\n          _id\n        }\n        count\n      }\n      downvotes {\n        users {\n          _id\n        }\n        count\n      }\n    }\n  }",
+						"variables": "{\n    \"id\": \"63ea39e3c1a6a81877ed1e7c\"\n}"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mutation DownvotePost",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN_CODERSCHOOL}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation DownvotePost($id: ID!) {\n  downvotePost(_id: $id) {\n    status\n    upvotes {\n        users {\n            _id\n        }\n        count\n    }\n    downvotes {\n        users {\n            _id\n        }\n        count\n    }\n  }\n}",
+						"variables": "{\n    \"id\": \"63ea39e3c1a6a81877ed1e7c\"\n}"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mutation DeletePost",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN_CODERSCHOOL}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation DeletePost($id: ID!) {\n  deletePost(_id: $id) {\n    status\n  }\n}",
+						"variables": "{\n  \"id\": \"63e48eb7444e3b16cc19b77e\"\n}"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mutation AddComment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN_CODERSCHOOL}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation AddComment($input: CreateCommentInput!) {\n  addComment(input: $input) {\n    id\n    author {\n      _id\n      email\n    }\n    content\n    createdAt\n    updatedAt\n  }\n}",
+						"variables": "{\n  \"input\": {\n    \"content\": \"Comment 1 - 535 - {{$randomInt}}\",\n    \"postId\": \"63ea39e3c1a6a81877ed1e7c\",\n    \"parentComment\": \"63eb0270022e7b4b5b04e350\"\n  }\n}"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "query Comments",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN_CODERSCHOOL}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query Comments($postId: ID, $limit: Int) {\n  comments(postId: $postId, limit: $limit) {\n    id\n    content\n    parentComment {\n      id\n      content\n      author {\n        _id\n        email\n      }\n    }\n    childComments {\n      id\n      content\n      author {\n        _id\n        email\n      }\n    }\n  }\n}",
+						"variables": "{\n  \"postId\": \"63ea39e3c1a6a81877ed1e7c\",\n  \"limit\": 3\n}"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "query Comment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN_CODERSCHOOL}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query Comment($commentId: ID!) {\n  comment(id: $commentId) {\n    id\n    content\n    author {\n      email\n      _id\n    }\n    childComments {\n      comments {\n        id\n        content\n        childComments {\n          count\n        }\n      }\n    }\n  }\n}",
+						"variables": "{\n  \"commentId\": \"63ea506b84592353f6858327\"\n}"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

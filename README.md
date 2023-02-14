@@ -20,6 +20,8 @@
 
 In conclusion, **GraphQL** and **MongoDB** are good choices for building a discussion forum app because they offer flexible, efficient, and scalable solutions for querying and storing data.
 
+And here are the technologies I will use for this project:
+
 1. NodeJS
 2. GraphQL
 3. MongoDb
@@ -27,34 +29,89 @@ In conclusion, **GraphQL** and **MongoDB** are good choices for building a discu
 5. ReactJS
 6. Material-UI
 
-
 # Data model
 
 1. Accounts:
-    - Email (String) - Required
-    - Password (String) - Required
-    - Name (String) - Optional
-    - CreatedAt (Date) - Required
-    - UpdatedAt (Date) - Required
+    - email (String) - Required
+    - password (String) - Required
+    - name (String) - Optional
 
 2. Posts:
 
-    - Title (String) - Required
-    - Text (String) - Optional
-    - Author (Reference to Accounts) - Required
-    - Tags (Array of Strings) - Optional
-    - CreatedAt (Date) - Required
-    - UpdatedAt (Date) - Required
-    - Upvotes (Number) - Required
-    - Downvotes (Number) - Required
+    - title (String) - Required
+    - content (String) - Optional
+    - author (Reference to Accounts) - Required
+    - tags (Array of Strings) - Optional
+    - upvotes (voteSchema) - Optional
+    - downvotes (voteSchema) - Optional
 
-3. PostComments:
+3. Comments:
 
-    - Text (String) - Required
-    - Author (Reference to Accounts) - Required
-    - Post (Reference to Posts) - Required
-    - ReplyTo (Reference to PostComments) - Optional
-    - CreatedAt (Date) - Required
-    - UpdatedAt (Date) - Required
-    - Upvotes (Number) - Required
-    - Downvotes (Number) - Required
+    - author (Reference to Accounts) - Required
+    - content (String) - Required
+    - post (Reference to Posts) - Required
+    - parentComment (Reference to Comments) - Optional
+    - childComments (Reference to Comments) - Optional
+    - upvotes (voteSchema) - Optional
+    - downvotes (voteSchema) - Optional
+
+4. Tags:
+
+    - tag (String, Unit and ID) - Required
+    - post (Reference to Posts) - Required
+
+
+
+voteSchema: 
+
+    - users (Reference to Accounts) - Required
+    - count Number - Required
+
+
+# Run App
+First, you need to configure the `env` file.
+1. Front-end
+```env
+PORT=3001
+REACT_APP_GRAPH_QL_PATH=http://localhost:3000/graphql
+```
+2. Back-end
+```env
+PORT=3000
+NODE_ENV=develop
+MONGO_URL_CONNECT=
+REDIS_HOST=
+REDIS_PORT=
+
+ACCESS_TOKEN_SECRET=
+REFRESH_TOKEN_SECRET=
+```
+And then you can choose one of the following ways to start the project.
+## Normal
+1. Front-end
+
+```bash
+$ cd ./frontend
+$ touch .env
+$ npm install
+$ npm run start
+```
+2. Back-end
+```bash
+$ cd ./backend
+$ touch .env
+$ npm install
+$ npm run start
+```
+## Docker
+
+```bash
+$ docker-compose up
+```
+
+# Reference
+
+MongoDB
+
+- [MongoDB Schema Design Best Practices](https://www.mongodb.com/developer/products/mongodb/mongodb-schema-design-best-practices/)
+- [Building with Patterns: A Summary](https://www.mongodb.com/blog/post/building-with-patterns-a-summary)
