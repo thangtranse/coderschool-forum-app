@@ -34,8 +34,7 @@ const schema = new Schema(
   { timestamps: true }
 );
 
-// schema.index({ post: 1, createdAt: -1 });
-
+schema.index({ post: 1, createdAt: -1 });
 schema.pre("update", function () {
   this.update({}, { $set: { updatedAt: new Date() } });
 });

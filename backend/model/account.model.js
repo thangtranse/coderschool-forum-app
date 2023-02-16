@@ -9,18 +9,19 @@ const schema = new Schema(
   {
     email: { type: String, required: true, lowercase: true, unquie: true },
     password: { type: String, required: true },
-    name: { type: String }
+    name: { type: String },
   },
   { timestamps: true }
 );
 
+schema.index({ email: 1 });
 // middleware mongo method save
 schema.pre("save", async function (next) {
   try {
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(this.password, salt);
     this.password = hashPassword;
-    console.log("password", this)
+    console.log("password", this);
     next();
   } catch (error) {
     next(error);

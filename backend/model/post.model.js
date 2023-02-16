@@ -14,6 +14,7 @@ const schema = new Schema(
   { timestamps: true }
 );
 
+schema.index({ author: 1 });
 // middleware mongo method save
 schema.pre("save", async function (next) {
   try {
