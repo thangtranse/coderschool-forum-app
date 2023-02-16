@@ -1,5 +1,5 @@
 // React
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 // Material
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -24,7 +24,7 @@ function LoginForm({ proEmail = "", onLogin, isError, isLoading }) {
 
   useEffect(() => {
     if (proEmail) {
-      setIsPasswordFieldFocus(true)
+      setIsPasswordFieldFocus(true);
     }
   }, [proEmail]);
 

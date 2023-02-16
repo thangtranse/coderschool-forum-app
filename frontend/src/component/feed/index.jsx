@@ -10,6 +10,7 @@ import AvatarComponent from "../avatar";
 
 function FeedComponent({
   _id,
+  isReview,
   author = { name: "Trần Minh Thắng" },
   title = "",
   markdown = "",
@@ -19,7 +20,6 @@ function FeedComponent({
   downvote = 0,
   ...props
 }) {
-
   const getMarkdownText = () => {
     return { __html: marked.parse(markdown) };
   };
@@ -28,6 +28,7 @@ function FeedComponent({
     <Box
       {...props}
       sx={{
+        margin: "5px 0",
         padding: "10px",
         border: "1px solid",
         ...props.sx,
@@ -60,7 +61,7 @@ function FeedComponent({
         dangerouslySetInnerHTML={getMarkdownText()}
       />
       {tags.map((x) => {
-        return `#${x}`;
+        return `#${x} `;
       })}
       <Box
         sx={{
@@ -90,7 +91,7 @@ function FeedComponent({
           comments.count > 0 ? "s" : ""
         }`}</Typography>
       </Box>
-      <Box>
+      <Box sx={{ display: isReview ? "none" : "block" }}>
         <CommentList
           author={{ email: author.email, name: author.name }}
           postId={_id}

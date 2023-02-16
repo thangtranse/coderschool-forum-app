@@ -55,20 +55,22 @@ const LoadDataComponent = ({ GET_POSTS_QUERY }) => {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div>
+    <>
       {data.posts.data.map((item, index) => {
         return (
-          <FeedComponent
-            key={item._id}
-            _id={item._id}
-            title={item.title}
-            author={{ name: item.author.email }}
-            markdown={item.content}
-            upvote={item.upvotes.count}
-            downvote={item.downvotes.count}
-            comments={item.comments}
-            tags={item.tags}
-          />
+          <>
+            <FeedComponent
+              key={item._id}
+              _id={item._id}
+              title={item.title}
+              author={{ name: item.author.email }}
+              markdown={item.content}
+              upvote={item.upvotes.count}
+              downvote={item.downvotes.count}
+              comments={item.comments}
+              tags={item.tags}
+            />
+          </>
         );
       })}
       <div
@@ -81,7 +83,7 @@ const LoadDataComponent = ({ GET_POSTS_QUERY }) => {
       >
         {" "}
       </div>
-    </div>
+    </>
   );
 };
 

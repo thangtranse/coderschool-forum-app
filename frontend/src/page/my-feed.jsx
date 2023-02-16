@@ -43,6 +43,7 @@ export default function MyFeedPage() {
           direction="column"
           justifyContent="center"
           alignItems="stretch"
+          gap={1}
         >
           <Grid item>
             <PostForm isLoading={null} onSubmitDataCreate={handleCreateNews} />

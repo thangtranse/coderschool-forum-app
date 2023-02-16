@@ -11,8 +11,12 @@ const CREATE_POST_MUTATION = gql`
         _id
         email
       }
-      upvotes
-      downvotes
+      upvotes {
+        count
+      }
+      downvotes {
+        count
+      }
       createdAt
       updatedAt
     }
