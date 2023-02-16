@@ -6,7 +6,7 @@ const countAllPostComment = async (postId) => {
   const filter = {
     post: new mongoose.Types.ObjectId(postId),
   };
-  return await count({ filter });
+  return await count(filter);
 };
 
 const readParentComments = async (postId, limit) => {

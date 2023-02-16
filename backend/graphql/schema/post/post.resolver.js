@@ -62,6 +62,7 @@ const resolvers = {
       const { _id: postId } = parent;
       const comments = await commentService.readParentComments(postId, 4);
       const countComments = await commentService.countAllPostComment(postId);
+      console.log(countComments)
       return {
         comments: comments,
         count: countComments,

@@ -11,6 +11,7 @@ const cors = require("cors");
 
 const corsOptions = {
   origin: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTION"],
   credentials: true,
 };
 
@@ -25,9 +26,14 @@ app.use(
 );
 const { schemaWithPermissions } = require("./graphql/schema");
 const plugins = [
-  createApolloQueryValidationPlugin({
-    schema: schemaWithPermissions,
-  }),
+  {
+    requestDidStart(requestContext) {
+      requestContext.response.http.headers.set(
+        "Referrer-Policy",
+        "no-referrer-when-downgrade"
+      );
+    },
+  },
 ];
 
 const server = new ApolloServer({
