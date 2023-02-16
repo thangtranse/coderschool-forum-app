@@ -13,8 +13,7 @@ function PostFormComponent({
   onSubmitDataCreate,
 }) {
   const [stateTitle, setTitle] = useState(title);
-  const [markdown, setMarkdown] = useState(content);
-  const [stateTags, setTags] = useState(tags);
+  const [markdown, setMarkdown] = useState(content);  
   const [review, setReview] = useState({ title, content, tags });
   const [isReview, setIsReview] = useState(false);
   const [isChange, setIsChange] = useState(false);
@@ -29,11 +28,7 @@ function PostFormComponent({
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSubmitDataCreate({
-      title: stateTitle,
-      content: markdown,
-      tags: stateTags,
-    });
+    onSubmitDataCreate(review);
   };
 
   const handleReview = (event) => {
