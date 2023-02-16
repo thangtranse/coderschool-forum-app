@@ -4,12 +4,17 @@ const {
   updateUserPost,
   deleteUserPost,
 } = require("../../store/post.store");
+const { updateHashTags } = require("../hashtag");
 
 const createNewPost = async (data, userId) => {
-  return await createPost({
+  const result = await createPost({
     ...data,
     author: new mongoose.Types.ObjectId(userId),
   });
+  if (result && data.tags && data.tags.length > 0) {
+    updateHashTags(data.tags, result._id);
+  }
+  return result;
 };
 
 const updateUserPostService = async (data, postId, userId) => {
@@ -20,6 +25,8 @@ const deleteUserPostService = async (postId, userId) => {
   return await deleteUserPost(postId, userId);
 };
 
-
-
-module.exports = { createNewPost, updateUserPostService, deleteUserPostService };
+module.exports = {
+  createNewPost,
+  updateUserPostService,
+  deleteUserPostService,
+};

@@ -5,6 +5,14 @@ const {
   count: postCount,
 } = require("../../store/post.store");
 
+const getPostByIds = async (listIdPost = []) => {
+  return await postGetAll({
+    filter: {
+      _id: { $in: listIdPost },
+    },
+  });
+};
+
 const getPosts = async ({ page, limit }) => {
   return await postGetAll({ filter: {}, page, limit });
 };
@@ -42,4 +50,5 @@ module.exports = {
   countPosts,
   getUserPosts,
   countUserPosts,
+  getPostByIds,
 };

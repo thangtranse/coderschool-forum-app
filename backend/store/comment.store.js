@@ -22,7 +22,7 @@ const getOne = async (filter = {}, projection = {}, options = {}) => {
   return await commentModel.findOne(filter, projection, options);
 };
 
-const count = async (filter = {}) => {
+const count = async (filter) => {
   return await commentModel.countDocuments(filter);
 };
 

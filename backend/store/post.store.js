@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const postModel = require("../model/post.model");
 
-const count = async (filter = {}) => {
+const count = async (filter) => {
   return await postModel.countDocuments(filter);
 };
 
@@ -9,14 +9,11 @@ const getOne = async (filter = {}, projection = {}, options = {}) => {
   return await postModel.findOne(filter, projection, options);
 };
 
-const getAll = async ({ filter = {}, limit = 10, page = 1, sort }) => {
-  let setPage = page < 1 ? 1 : page;
-  const skip = limit * (setPage - 1);
+const getAll = async ({ filter = {}, limit = 10, sort }) => {
   return await postModel
     .find(filter, { __v: false })
     .sort(sort)
     .limit(limit)
-    .skip(skip);
 };
 
 const getById = async (_id) => {

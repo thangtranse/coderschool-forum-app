@@ -19,7 +19,6 @@ const resolvers = {
     },
     login: async (parent, args) => {
       const parseArgs = JSON.parse(JSON.stringify(args));
-      console.log("thangtran.parseArgs", parseArgs)
       return await accountService.login({
         email: parseArgs.input.email,
         password: parseArgs.input.password,

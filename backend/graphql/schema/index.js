@@ -7,9 +7,20 @@ const { applyMiddleware } = require("graphql-middleware");
 const post = require("./post");
 const comment = require("./comment");
 const account = require("./account");
+const hashtag = require("./hashtag");
 
-const typeDefs = [account.typeDefs, post.typeDefs, comment.typeDefs];
-const resolvers = merge(account.resolvers, post.resolvers, comment.resolvers);
+const typeDefs = [
+  account.typeDefs,
+  post.typeDefs,
+  comment.typeDefs,
+  hashtag.typeDefs,
+];
+const resolvers = merge(
+  account.resolvers,
+  post.resolvers,
+  comment.resolvers,
+  hashtag.resolvers
+);
 
 const { isAuthenticated } = require("../../helpers/permission.helper");
 

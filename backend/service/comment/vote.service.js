@@ -2,7 +2,6 @@ const { getById } = require("../../store/comment.store");
 
 const upvote = async (commentId, userId) => {
   const comment = await getById(commentId);
-  console.log("comment", commentId);
   const index = comment.downvotes.users.indexOf(userId);
   if (index !== -1) {
     comment.downvotes.users.splice(index, 1);
