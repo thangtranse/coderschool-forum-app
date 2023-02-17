@@ -1,5 +1,6 @@
 // React
 import React, { memo } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 // MUI
 import AccountCircle from "@mui/icons-material/AccountCircle";
@@ -20,12 +21,15 @@ import {
   Tooltip,
   Typography
 } from "@mui/material";
+// Import
+import { Logout } from "../../reducer/action/logout";
 
 const drawerWidth = 240;
 
 function AppBarComponent({ children, ...props }) {
   const { window } = props;
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -38,7 +42,8 @@ function AppBarComponent({ children, ...props }) {
   };
 
   const handleLogout = () => {
-    navigate("/news/my-feeds");
+    dispatch(Logout());
+    navigate(0);
   };
 
   const handleDirectNews = () => {
