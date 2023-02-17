@@ -1,7 +1,8 @@
 // React
 import React from "react";
+import { Link as RouterLink } from "react-router-dom";
 // MUI
-import { Box, Typography, Link } from "@mui/material";
+import { Box, Link, Typography } from "@mui/material";
 import Comments from "./list";
 import ReplyComponent from "./reply";
 
@@ -38,7 +39,7 @@ const CommentList = ({ postId, comments, total, author: { email, name } }) => {
           display="block"
           gutterBottom
         >
-          <Link href={`/news/${postId}`} underline="none">
+          <Link component={RouterLink} to={`/news/${postId}`} underline="none">
             {comments.length < total
               ? `Xem tất cả ${total - comments.length} bình luận còn lại`
               : ""}

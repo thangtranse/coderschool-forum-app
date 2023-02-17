@@ -8,7 +8,7 @@ import { Box, TextField, Typography } from "@mui/material";
 // Import
 import { ADD_COMMENT_MUTATION } from "../../apollo/query/comment";
 
-const Comment = ({
+const ReplyComponent = ({
   commentId,
   author: { email = "", name = "" },
   childComments: { count },
@@ -55,7 +55,13 @@ const Comment = ({
   };
 
   return (
-    <>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start",
+      }}
+    >
       <Typography
         variant="overline"
         display="block"
@@ -81,13 +87,13 @@ const Comment = ({
           id="input-commennt-sx"
           label={`${name || email} trả lời bình luận`}
           variant="standard"
-          sx={{ margin: 0 }}
+          sx={{ margin: "0px !important" }}
           inputRef={inputRefComment}
           onKeyDown={handlePushComment}
         />
       </Box>
-    </>
+    </Box>
   );
 };
 
-export default Comment;
+export default ReplyComponent;

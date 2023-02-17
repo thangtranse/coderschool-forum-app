@@ -3,17 +3,23 @@ import React, { memo } from "react";
 import { useNavigate } from "react-router-dom";
 // MUI
 import AccountCircle from "@mui/icons-material/AccountCircle";
+import LogoutIcon from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
-import Divider from "@mui/material/Divider";
-import Drawer from "@mui/material/Drawer";
-import IconButton from "@mui/material/IconButton";
-import List from "@mui/material/List";
-import Toolbar from "@mui/material/Toolbar";
-import Tooltip from "@mui/material/Tooltip";
-import Typography from "@mui/material/Typography";
+import {
+  AppBar,
+  Box,
+  CssBaseline,
+  Divider,
+  Drawer,
+  IconButton,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Toolbar,
+  Tooltip,
+  Typography
+} from "@mui/material";
 
 const drawerWidth = 240;
 
@@ -28,6 +34,10 @@ function AppBarComponent({ children, ...props }) {
   };
 
   const handleDirectMyFeeds = () => {
+    navigate("/news/my-feeds");
+  };
+
+  const handleLogout = () => {
     navigate("/news/my-feeds");
   };
 
@@ -46,21 +56,40 @@ function AppBarComponent({ children, ...props }) {
       </Typography>
       <Divider />
       <List>
-        <Tooltip title="Trang cá nhân">
-          <IconButton
-            size="large"
-            aria-label="account of current user"
-            aria-controls="menu-appbar"
-            aria-haspopup="true"
-            color="inherit"
-            onClick={() => handleDirectMyFeeds()}
-          >
-            <AccountCircle />
-          </IconButton>
-        </Tooltip>
+        <ListItemButton>
+          <ListItemIcon>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              color="inherit"
+              onClick={() => handleDirectMyFeeds()}
+            >
+              <AccountCircle />
+            </IconButton>
+          </ListItemIcon>
+          <ListItemText primary="Trang cá nhân" />
+        </ListItemButton>
+        <ListItemButton>
+          <ListItemIcon>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              color="inherit"
+              onClick={() => handleLogout()}
+            >
+              <LogoutIcon />
+            </IconButton>
+          </ListItemIcon>
+          <ListItemText primary="Đăng xuất" />
+        </ListItemButton>
       </List>
     </Box>
   );
+
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
@@ -103,6 +132,18 @@ function AppBarComponent({ children, ...props }) {
                   onClick={() => handleDirectMyFeeds()}
                 >
                   <AccountCircle />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Đăng xuất">
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  color="inherit"
+                  onClick={() => handleLogout()}
+                >
+                  <LogoutIcon />
                 </IconButton>
               </Tooltip>
             </Box>

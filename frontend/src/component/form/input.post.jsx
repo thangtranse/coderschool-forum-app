@@ -1,8 +1,12 @@
 // React
+import { useLazyQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { Mention, MentionsInput } from "react-mentions";
 // Material
 import { TextField } from "@mui/material";
-import { Mention, MentionsInput } from "react-mentions";
+// Import
+import { HASHTAG_RECOMMENT } from "../../apollo/query/hashtag";
 
 const defaultMentionStyle = {
   backgroundColor: "#cee4e5",
@@ -51,7 +55,16 @@ function InputPostComponent({
   isReview = false,
   option: { onSetIsChange, onSetTitle, onSetContent, onSetIsReview },
 }) {
+  const accessToken = useSelector((state) => state.authentication.accessToken);
   const [emojis, setEmojis] = useState([]);
+
+  const [loadHashtagRecomment] = useLazyQuery(HASHTAG_RECOMMENT, {
+    context: {
+      headers: {
+        authorization: `Bearer ${accessToken}`,
+      },
+    },
+  });
 
   useEffect(() => {
     fetch(
@@ -79,6 +92,25 @@ function InputPostComponent({
     onSetContent(e.target.value);
   };
 
+  const handleMentionHashtag = (search, callback) => {
+    if (!search) return;
+    loadHashtagRecomment({
+      variables: {
+        search: search,
+      },
+    })
+      .then((data) => {
+        if (data.data.recomment_hashtag) {
+          return data.data.recomment_hashtag.map((dHashtag) => ({
+            id: dHashtag.hashtag,
+            display: `${dHashtag.hashtag}`,
+          }));
+        }
+        return [];
+      })
+      .then(callback);
+  };
+
   return (
     <>
       <TextField
@@ -96,7 +128,9 @@ function InputPostComponent({
         style={{ ...emojiExampleStyle, display: isReview ? "none" : "block" }}
         value={content}
         onChange={onEditorChange}
-        placeholder={"Press ':' for emojis, mention people using '@'"}
+        placeholder={
+          "Press ':' for emojis, mention people using '@' and hashtag using '#'"
+        }
       >
         <Mention
           trigger="@"
@@ -106,7 +140,7 @@ function InputPostComponent({
           style={defaultMentionStyle}
           appendSpaceOnAdd
           renderSuggestion={(entry) => {
-            return `@${entry.id}`;
+            return `@${entry.hashtag}`;
           }}
           displayTransform={(id, display) => {
             return `@${display}`;
@@ -115,10 +149,9 @@ function InputPostComponent({
         <Mention
           trigger="#"
           markup="#__id__"
-          data={hashTag}
-          regex={/#(\S+)/}
+          regex={/#($\S)/}
+          data={handleMentionHashtag}
           style={defaultMentionStyle}
-          appendSpaceOnAdd
           renderSuggestion={(entry) => {
             return `#${entry.id}`;
           }}
@@ -142,20 +175,6 @@ export default InputPostComponent;
 const users = [
   {
     id: "isaac",
-    display: "Isaac Newton",
-  },
-  {
-    id: "sam",
-    display: "Sam Victor",
-  },
-  {
-    id: "emma",
-    display: "emmanuel@nobody.com",
-  },
-];
-const hashTag = [
-  {
-    id: "minhthang",
     display: "Isaac Newton",
   },
   {

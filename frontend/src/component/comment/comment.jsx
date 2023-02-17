@@ -1,15 +1,12 @@
 // React
 import { useLazyQuery } from "@apollo/client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 // MUI
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Box, Typography } from "@mui/material";
 // Import
-import { useEffect } from "react";
-import {
-  COMMENT_QUERY
-} from "../../apollo/query/comment";
+import { COMMENT_QUERY } from "../../apollo/query/comment";
 import AvatarComponent from "../avatar";
 import VoteComponent from "../vote";
 import Comments from "./list";
@@ -66,6 +63,7 @@ const Comment = ({
         alignItems: "baseline",
         gap: "10px",
         margin: "6px 0",
+        width: "100%",
       }}
     >
       <AvatarComponent author={{ email, name }} />
@@ -75,6 +73,7 @@ const Comment = ({
           flexDirection: "column",
           justifyContent: "flex-start",
           alignItems: "baseline",
+          width: "inherit",
         }}
       >
         <Typography sx={{ cursor: "pointer" }} variant="subtitle2" gutterBottom>
@@ -101,9 +100,12 @@ const Comment = ({
         <Box
           sx={{
             display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start",
+            flexDirection: "row",
+            alignItems: "inherit",
             cursor: "pointer",
+            width: "inherit",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
             "& .MuiTextField-root": { m: 1, width: "30ch" },
             "& p": {
               marginBottom: 0,
@@ -118,32 +120,32 @@ const Comment = ({
             postId={postId}
             onLoadComment={loadComment}
           />
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "flex-end",
+              cursor: "pointer",
+              "& .MuiTextField-root": { m: 1, width: "30ch" },
+              "& p": {
+                marginBottom: 0,
+              },
+            }}
+          >
+            {count > 0 && count - child > 0 ? (
+              <>
+                <Typography
+                  onClick={handleLoadMore}
+                  variant="body2"
+                  gutterBottom
+                >{`Xem thêm ${count - child} bình luận`}</Typography>
+                <KeyboardArrowDownIcon onClick={handleLoadMore} />
+              </>
+            ) : (
+              ""
+            )}
+          </Box>
         </Box>
         <Comments comments={child} />
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "flex-end",
-            cursor: "pointer",
-            "& .MuiTextField-root": { m: 1, width: "30ch" },
-            "& p": {
-              marginBottom: 0,
-            },
-          }}
-        >
-          {count > 0 && count - child > 0 ? (
-            <>
-              <Typography
-                onClick={handleLoadMore}
-                variant="body2"
-                gutterBottom
-              >{`Xem thêm ${count - child} bình luận`}</Typography>
-              <KeyboardArrowDownIcon onClick={handleLoadMore} />
-            </>
-          ) : (
-            ""
-          )}
-        </Box>
       </Box>
     </Box>
   );

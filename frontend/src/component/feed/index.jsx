@@ -1,8 +1,9 @@
 // React
 import { marked } from "marked";
 import React, { memo } from "react";
+import { Link as RouterLink } from "react-router-dom";
 // MUI
-import { Box, Typography } from "@mui/material";
+import { Box, Link, Typography } from "@mui/material";
 import CommentList from "../comment";
 import VoteComponent from "../vote";
 // Component
@@ -21,7 +22,12 @@ function FeedComponent({
   ...props
 }) {
   const getMarkdownText = () => {
-    return { __html: marked.parse(markdown) };
+    const htmlSource = marked.parse(markdown);
+    const html = htmlSource.replace(
+      /(#\w+)/g,
+      `<a href='/hashtag/$1' style='cursor: pointer; color: #1875d2ba; text-decoration: none'}>$1</a>`
+    );
+    return { __html: html };
   };
 
   return (
@@ -52,17 +58,40 @@ function FeedComponent({
           {author && author.name ? author.name : ""}
         </Typography>
       </Box>
-      <Typography variant="h6" gutterBottom>
-        {title}
-      </Typography>
+      <Link
+        component={RouterLink}
+        to={`/news/${_id}`}
+        underline="none"
+        sx={{ color: "initial" }}
+      >
+        <Typography variant="h6" gutterBottom>
+          {title}
+        </Typography>
+      </Link>
       <Typography
         variant="body1"
         gutterBottom
         dangerouslySetInnerHTML={getMarkdownText()}
       />
-      {tags.map((x) => {
-        return `#${x} `;
-      })}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          gap: "5px",
+          marginBottom: "5px",
+          alignItems: "stretch !important",
+          justifyContent: "flex-start",
+        }}
+      >
+        {tags.map((x, i) => {
+          return (
+            <Box
+              key={x + "" + i}
+              sx={{ cursor: "pointer", color: "#1875d2ba" }}
+            >{`#${x} `}</Box>
+          );
+        })}
+      </Box>
       <Box
         sx={{
           display: "flex",

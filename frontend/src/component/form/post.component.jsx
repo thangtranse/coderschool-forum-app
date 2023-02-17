@@ -5,6 +5,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import { Box } from "@mui/material";
 import FeedComponent from "../feed";
 import InputPostComponent from "./input.post";
+import { REGEX_HASHTAG } from "../../util/regexHashtag";
 
 function PostFormComponent({
   title = "",
@@ -34,7 +35,7 @@ function PostFormComponent({
   const handleReview = (event) => {
     event.preventDefault();
     setIsReview(!isReview);
-    const hashtagRegex = /#[\w\d]+/g;
+    const hashtagRegex = REGEX_HASHTAG;
     const hashtags = markdown.match(hashtagRegex);
     const tagsWithoutHash = hashtags && hashtags.map((tag) => tag.replace("#", ""));
     setReview({

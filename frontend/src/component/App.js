@@ -1,16 +1,20 @@
-import { useQuery, gql } from "@apollo/client";
-
-const GET_LOCATIONS = gql`
-  query Profile {
-    profile {
-      _id
-      email
-    }
-  }
-`;
+// React
+import React from "react";
+import { useQuery } from "@apollo/client";
+import { useSelector } from "react-redux";
+// Import
+import { GET_PROFILE } from "../apollo/query/user";
 
 function DisplayLocations() {
-  const { loading, error, data } = useQuery(GET_LOCATIONS);
+  const accessToken = useSelector((state) => state.authentication.accessToken);
+  console.log("accessToken", accessToken)
+  const { loading, error, data } = useQuery(GET_PROFILE, {
+    context: {
+      headers: {
+        authorization: `Bearer ${accessToken}`,
+      },
+    },
+  });
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error : {error.message}</p>;

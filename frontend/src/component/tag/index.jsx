@@ -1,7 +1,9 @@
+// React
+import React, { useRef } from "react";
+// MUI
 import { Cancel } from "@mui/icons-material";
 import { Stack, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { useRef, useState } from "react";
 
 const Tags = ({ data, handleDelete }) => {
   return (
@@ -30,7 +32,7 @@ const Tags = ({ data, handleDelete }) => {
   );
 };
 
-export default function InputTags({tags, setTags}) {
+export default function InputTags({ tags, setTags }) {
   const tagRef = useRef();
 
   const handleDelete = (value) => {
