@@ -55,9 +55,9 @@ And here are the technologies I will use for this project:
     - upvotes (voteSchema) - Optional
     - downvotes (voteSchema) - Optional
 
-4. Tags:
+4. Hashtags:
 
-    - tag (String, Unit and ID) - Required
+    - hashtag (String, Unit and ID) - Required
     - post (Reference to Posts) - Required
 
 
